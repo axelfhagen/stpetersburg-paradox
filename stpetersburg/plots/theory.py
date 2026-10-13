@@ -15,6 +15,7 @@ from ..style import (BLUE, DASHED, INK_2, MUTED, ORANGE, SURFACE, header, log_mo
 
 
 def plot_tail(outdir: Path, rng: np.random.Generator, note: str, draws: int = 20_000_000) -> None:
+    """Figure 04: simulated vs. theoretical tail P(X >= x) = 2/x, and share of games vs. money by k."""
     k = rng.geometric(0.5, size=draws)
     kmax = int(k.max())
     ks = np.arange(1, kmax + 1)
@@ -69,6 +70,7 @@ def plot_tail(outdir: Path, rng: np.random.Generator, note: str, draws: int = 20
 
 
 def plot_bankroll(outdir: Path, note: str) -> None:
+    """Figure 05: expected value of one game when the casino can pay at most its bankroll."""
     bank = np.logspace(0.31, 15, 3000)
     ev = capped_ev(bank)
 
@@ -106,6 +108,7 @@ def plot_bankroll(outdir: Path, note: str) -> None:
 
 
 def plot_utility(outdir: Path, note: str) -> None:
+    """Figure 06: certainty equivalent under log and square-root utility as wealth grows."""
     wealth = np.logspace(0, 9, 160)
     ce_log = np.array([certainty_equivalent(w, "log") for w in wealth])
     ce_sqrt = np.array([certainty_equivalent(w, "sqrt") for w in wealth])

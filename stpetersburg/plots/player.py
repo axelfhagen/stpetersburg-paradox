@@ -53,6 +53,7 @@ def biggest_games(pay: np.ndarray, limit: int = 3) -> list[int]:
 
 def plot_journey(outdir: Path, rng: np.random.Generator, games: int = 3000,
                  price: float = 15.0) -> None:
+    """Figure 07: one illustrative player's payoffs, running average, balance and payoff tally."""
     k, pay = pick_journey(rng, games)
     x = np.arange(1, games + 1)
     run = np.cumsum(pay) / x

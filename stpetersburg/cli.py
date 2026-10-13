@@ -19,6 +19,7 @@ from .style import apply_theme  # noqa: E402
 
 
 def parse_args(argv=None) -> argparse.Namespace:
+    """Parse command-line options (see `python -m stpetersburg --help`)."""
     ap = argparse.ArgumentParser(
         prog="stpetersburg",
         description="Simulate the St. Petersburg game and render plots and animations.")
@@ -35,6 +36,7 @@ def parse_args(argv=None) -> argparse.Namespace:
 
 
 def main(argv=None) -> None:
+    """Run both simulations once, then render the selected figures and animations."""
     args = parse_args(argv)
     apply_theme()
     args.out.mkdir(parents=True, exist_ok=True)

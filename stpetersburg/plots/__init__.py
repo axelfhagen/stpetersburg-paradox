@@ -1,3 +1,5 @@
+"""Static figures 01-11, grouped by theme."""
+
 from .convergence import plot_fan, plot_heatmap, plot_ridgeline
 from .outcomes import plot_gamblers, plot_profit_odds, plot_who_wins, plot_worth
 from .player import plot_journey

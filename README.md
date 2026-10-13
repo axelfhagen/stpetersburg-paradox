@@ -6,7 +6,8 @@ to the expected value and the expectation is infinite. Yet hardly anyone would p
 more than about $20 to play.
 
 This project simulates the game at a large scale (10,000 players, a billion games
-each) and plots what actually happens to the players.
+each) and plots what actually happens to the players. It is a solo personal project
+in Python (NumPy, SciPy, Matplotlib).
 
 ![Running average of 10,000 players](output/01_running_mean_fan.png)
 
@@ -52,6 +53,9 @@ MP4 versions are in `output/`.
 
 ## Running it
 
+Requires Python 3 and the packages in `requirements.txt` (NumPy, SciPy,
+Matplotlib, Pillow). No external data is needed; everything is simulated.
+
 ```bash
 pip install -r requirements.txt
 python -m stpetersburg                # everything, into ./output
@@ -79,3 +83,7 @@ stpetersburg/
   formatting.py       tick and label formatters
   cli.py              command-line entry point
 ```
+
+## License
+
+MIT, see [LICENSE](LICENSE).

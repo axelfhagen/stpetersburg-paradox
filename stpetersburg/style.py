@@ -43,6 +43,7 @@ def _fonts() -> list[str]:
 
 
 def apply_theme() -> None:
+    """Set the dark matplotlib theme shared by every figure and animation."""
     plt.rcParams.update({
         "font.family": _fonts(),
         "text.parse_math": False,  # "$2 or $4" is money, not LaTeX
@@ -81,6 +82,7 @@ def apply_theme() -> None:
 
 
 def header(fig, title: str, subtitle: str, note: str | None = None) -> None:
+    """Draw the figure title and subtitle at the top and an optional footnote at the bottom."""
     fig.text(0.055, 0.955, title, color=INK, fontsize=19, fontweight="bold",
              ha="left", va="top")
     fig.text(0.055, 0.905, subtitle, color=INK_2, fontsize=11.5, ha="left", va="top")
@@ -101,6 +103,7 @@ def log_count_axis(axis) -> None:
 
 
 def colorbar(fig, mesh, rect: list[float]):
+    """Add a borderless colorbar in its own axes at `rect` (figure coordinates)."""
     cb = fig.colorbar(mesh, cax=fig.add_axes(rect))
     cb.outline.set_visible(False)
     cb.ax.tick_params(colors=INK_2, labelsize=9)
@@ -117,6 +120,7 @@ def spread_labels(ys, min_ratio: float) -> list[float]:
 
 
 def save(fig, outdir: Path, name: str) -> None:
+    """Save the figure as a 200 dpi PNG in `outdir` and close it."""
     path = outdir / name
     fig.savefig(path, dpi=200)
     plt.close(fig)

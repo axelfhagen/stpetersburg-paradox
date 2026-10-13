@@ -20,6 +20,7 @@ from .style import (AXIS, BLUE, DASHED, INK, INK_2, MUTED, ORANGE, RED, SERIES, 
 
 
 def save_anim(anim, fig, outdir: Path, stem: str, fps: int) -> None:
+    """Write the animation as GIF, plus MP4 when ffmpeg is on the PATH, then close the figure."""
     gif = outdir / f"{stem}.gif"
     anim.save(gif, writer=animation.PillowWriter(fps=fps), dpi=110,
               savefig_kwargs={"facecolor": SURFACE})
@@ -33,12 +34,14 @@ def save_anim(anim, fig, outdir: Path, stem: str, fps: int) -> None:
 
 
 def counter_text(fig):
+    """Empty top-right text artist, updated each frame with the game count."""
     return fig.text(0.955, 0.955, "", color=INK, fontsize=19, fontweight="bold",
                     ha="right", va="top")
 
 
 def anim_race(outdir: Path, rng: np.random.Generator, players: int = 5,
               games: int = 300_000, frames: int = 220, hold: int = 45, fps: int = 30) -> None:
+    """anim_01: running averages of a few players on log axes, with callouts for big jackpots."""
     k = rng.geometric(0.5, size=(players, games))
     payoff = 2.0 ** k
     run = np.cumsum(payoff, axis=1) / np.arange(1, games + 1)
@@ -133,6 +136,7 @@ def anim_race(outdir: Path, rng: np.random.Generator, players: int = 5,
 
 def anim_distributions(n: np.ndarray, M: np.ndarray, Mc: np.ndarray, cap: float,
                        outdir: Path, frames: int = 180, hold: int = 45, fps: int = 30) -> None:
+    """anim_02: distribution of averages over time, unlimited (`M`) vs. capped bankroll (`Mc`)."""
     rows = np.unique(np.linspace(0, len(n) - 1, frames).round().astype(int))
     timeline = np.concatenate([rows, np.full(hold, rows[-1])])
     bins = np.logspace(np.log10(2), 3.6, 140)
@@ -193,6 +197,7 @@ def anim_distributions(n: np.ndarray, M: np.ndarray, Mc: np.ndarray, cap: float,
 
 def anim_journey(outdir: Path, rng: np.random.Generator, games: int = 2000,
                  price: float = 12.0, frames: int = 240, hold: int = 60, fps: int = 30) -> None:
+    """anim_03: one player's game-by-game history, revealed progressively (animated figure 07)."""
     k, pay = pick_journey(rng, games)
     x = np.arange(1, games + 1)
     run = np.cumsum(pay) / x

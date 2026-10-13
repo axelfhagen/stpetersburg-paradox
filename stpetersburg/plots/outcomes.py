@@ -16,6 +16,7 @@ from ..style import (AXIS, BLUE, BLUE_RAMP, INK, INK_2, MUTED, ORANGE, RED, SURF
 
 
 def plot_profit_odds(n: np.ndarray, M: np.ndarray, outdir: Path, note: str) -> None:
+    """Figure 08: share of players in profit for each ticket price and number of games."""
     prices = np.linspace(2, 50, 241)
     P = np.empty((len(n), len(prices)))
     for i, row in enumerate(M):
@@ -73,6 +74,9 @@ def plot_profit_odds(n: np.ndarray, M: np.ndarray, outdir: Path, note: str) -> N
 
 def plot_who_wins(n: np.ndarray, M: np.ndarray, Mc: np.ndarray, cap: float,
                   outdir: Path, note: str) -> None:
+    """Figure 09: share of total winnings held by the luckiest player, the rest of the top 1%
+    and everyone else, for the unlimited game and the bankroll-capped game (`Mc`).
+    """
     decades = [d for d in (1, 100, 10 ** 4, 10 ** 6, 10 ** 9) if d <= n[-1]]
     players = M.shape[1]
     top = max(players // 100, 2)
@@ -121,6 +125,7 @@ def plot_who_wins(n: np.ndarray, M: np.ndarray, Mc: np.ndarray, cap: float,
 
 
 def plot_worth(outdir: Path, rng: np.random.Generator, players: int, note: str) -> None:
+    """Figure 10: spread of average payoff for real-world numbers of games, against log2 n."""
     scenarios = [
         ("Play once", 1),
         ("An evening at the table", 100),
@@ -179,6 +184,7 @@ def plot_worth(outdir: Path, rng: np.random.Generator, players: int, note: str) 
 
 def plot_gamblers(n: np.ndarray, M: np.ndarray, outdir: Path, note: str,
                   price: float = 25.0, shown: int = 300) -> None:
+    """Figure 11: cumulative profit of `shown` players who pay `price` per game."""
     profit = n[:, None] * (M - price)
     ahead = (M > price).mean(axis=1)
     sample = profit[:, :shown]

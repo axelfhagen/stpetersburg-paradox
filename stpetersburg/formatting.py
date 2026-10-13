@@ -4,6 +4,7 @@ from __future__ import annotations
 
 
 def money(x: float, _=None) -> str:
+    """Dollar amount with a k/M/B/T/Q suffix. The unused second argument fits FuncFormatter."""
     sign = "−" if x < 0 else ""
     x = abs(x)
     for scale, suffix in ((1e15, "Q"), (1e12, "T"), (1e9, "B"), (1e6, "M"), (1e3, "k")):
@@ -18,6 +19,7 @@ def money3(x: float, _=None) -> str:
 
 
 def count(x: float, _=None) -> str:
+    """Plain count with a k/M/B suffix, e.g. 1e9 -> '1B'."""
     for scale, suffix in ((1e9, "B"), (1e6, "M"), (1e3, "k")):
         if abs(x) >= scale:
             return f"{x / scale:g}{suffix}"

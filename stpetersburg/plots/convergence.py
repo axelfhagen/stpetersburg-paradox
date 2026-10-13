@@ -16,6 +16,10 @@ from ..style import (AQUA, BLUE, BLUE_RAMP, DASHED, INK, INK_2, MAGENTA, MUTED, 
 
 
 def plot_fan(n: np.ndarray, M: np.ndarray, outdir: Path, note: str) -> None:
+    """Figure 01: percentile bands of the running average, three highlighted players and log2 n.
+
+    `M` has shape (len(n), players), as returned by `simulation.running_means`.
+    """
     q = np.percentile(M, [1, 5, 25, 50, 75, 95, 99], axis=1)
     fig, ax = plt.subplots(figsize=(12, 6.75))
     fig.subplots_adjust(left=0.08, right=0.83, top=0.8, bottom=0.12)
@@ -79,6 +83,7 @@ def plot_fan(n: np.ndarray, M: np.ndarray, outdir: Path, note: str) -> None:
 
 
 def plot_heatmap(n: np.ndarray, M: np.ndarray, outdir: Path, note: str) -> None:
+    """Figure 02: density of running averages at each n, each column normalised to its peak."""
     edges_y = np.linspace(np.log10(2), 3.2, 220)
     H = np.stack([np.histogram(np.log10(row), bins=edges_y)[0] for row in M], axis=1)
     H = H / H.max(axis=0, keepdims=True)
@@ -122,6 +127,7 @@ def plot_heatmap(n: np.ndarray, M: np.ndarray, outdir: Path, note: str) -> None:
 
 
 def plot_ridgeline(n: np.ndarray, M: np.ndarray, outdir: Path, note: str) -> None:
+    """Figure 03: KDE of players' averages at every power of ten, stacked as ridgelines."""
     decades = [10 ** e for e in range(1, int(np.log10(n[-1])) + 1)]
     ramp = [BLUE_RAMP[s] for s in (600, 550, 500, 450, 400, 350, 300, 250, 200, 150, 100)]
     ramp = ramp[-len(decades):] if len(decades) <= len(ramp) else ramp
